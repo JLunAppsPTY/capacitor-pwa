@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Geolocation, Position } from '@capacitor/geolocation';
 import { Share } from '@capacitor/share';
+import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ export class HomePage {
   myImage = null;
   position: Position = null;
 
-  constructor() {}
+  constructor(private afMessaging: AngularFireMessaging) {}
 
   async takePicture() {
     const image = await Camera.getPhoto({
@@ -40,5 +41,17 @@ export class HomePage {
         ${this.position.coords.longitude}`,
       url: 'http://ionicacademy.com/'
     });
+  }
+
+  requestPushNotificationsPermission() { // requesting permission
+    this.afMessaging.requestToken // getting tokens
+      .subscribe(
+        (token) => { // USER-REQUESTED-TOKEN
+          console.log('Permission granted! Save to the server!', token);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 }
