@@ -115,7 +115,9 @@
                 "input": "src/assets",
                 "output": "/assets"
               },
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/combined-sw.js",
+              "src/firebase-messaging-sw.js"
             ]
           },
           "configurations": {
